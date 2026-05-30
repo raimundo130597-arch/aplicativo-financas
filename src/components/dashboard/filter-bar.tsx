@@ -34,7 +34,7 @@ export function FilterBar({ filters, onFiltersChange }: FilterBarProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg border p-4 shadow-sm">
+    <div className="bg-white dark:bg-gray-900 rounded-lg border dark:border-gray-800 p-4 shadow-sm">
       <div className="flex flex-col sm:flex-row gap-3 items-end">
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div className="space-y-1.5">

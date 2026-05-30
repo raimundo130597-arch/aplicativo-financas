@@ -56,7 +56,7 @@ export function TransactionList({
       {transactions.map((transaction) => (
         <div
           key={transaction.id}
-          className="flex items-center gap-3 p-3 sm:p-4 bg-white rounded-lg border hover:shadow-sm transition-shadow"
+          className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 hover:shadow-sm transition-shadow"
         >
           <div
             className={`p-2 rounded-full shrink-0 ${
