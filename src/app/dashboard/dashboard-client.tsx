@@ -6,14 +6,15 @@ import { useTheme } from "next-themes";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SummaryCards } from "@/components/dashboard/summary-cards";
-import { ExpenseChart } from "@/components/dashboard/expense-chart";
+import { CategoryChart } from "@/components/dashboard/category-chart";
 import { TransactionList } from "@/components/dashboard/transaction-list";
 import { TransactionForm } from "@/components/dashboard/transaction-form";
 import { FilterBar } from "@/components/dashboard/filter-bar";
 import { useToast } from "@/components/ui/use-toast";
 import { Transaction, TransactionFormData, Filters } from "@/types";
 import { getCurrentMonthRange } from "@/lib/utils";
-import { TrendingUp, Plus, LogOut, Loader2, Sun, Moon } from "lucide-react";
+import { exportTransactionsToCSV } from "@/lib/export-csv";
+import { TrendingUp, Plus, LogOut, Loader2, Sun, Moon, Download } from "lucide-react";
 
 interface DashboardClientProps {
   userEmail: string;
@@ -200,7 +201,7 @@ export function DashboardClient({ userEmail, userId }: DashboardClientProps) {
               Controle suas finanças pessoais
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Button
               onClick={() => openNewTransaction("income")}
               className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none"
@@ -217,6 +218,16 @@ export function DashboardClient({ userEmail, userId }: DashboardClientProps) {
               <Plus className="h-4 w-4 mr-1.5" />
               Despesa
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => exportTransactionsToCSV(transactions)}
+              disabled={transactions.length === 0}
+              title="Exportar transações para Excel/CSV"
+            >
+              <Download className="h-4 w-4 mr-1.5" />
+              Exportar CSV
+            </Button>
           </div>
         </div>
 
@@ -229,7 +240,7 @@ export function DashboardClient({ userEmail, userId }: DashboardClientProps) {
         {/* Chart + List */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1">
-            <ExpenseChart transactions={transactions} />
+            <CategoryChart transactions={transactions} />
           </div>
 
           <div className="lg:col-span-2">
